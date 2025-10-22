@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maloy Sell</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Загрузочный экран -->
+    <div id="loader">
+        <div class="loading-text">
+            <span class="letter">M</span>
+            <span class="letter">a</span>
+            <span class="letter">l</span>
+            <span class="letter">o</span>
+            <span class="letter">y</span>
+            <span class="letter">&nbsp;</span>
+            <span class="letter">S</span>
+            <span class="letter">e</span>
+            <span class="letter">l</span>
+            <span class="letter">l</span>
+        </div>
+        <div class="loading-circles">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div id="app" class="hidden">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-store"></i> Maloy Sell</h1>
+                <button class="admin-panel-btn hidden" id="adminPanelBtn" onclick="showAdminPanel()">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Контент страниц -->
+        <main id="content" class="content">
+            <!-- Каталог -->
+            <div id="catalog-page" class="page active">
+                <div class="page-header">
+                    <h2><i class="fas fa-list"></i> Номера Telegram</h2>
+                </div>
+                <div class="country-filter">
+                    <div class="filter-toggle" onclick="toggleCountryFilter()">
+                        <span id="filterText">Все страны</span>
+                        <i class="fas fa-chevron-down" id="filterArrow"></i>
+                    </div>
+                    <div class="country-dropdown" id="countryDropdown">
+                        <div class="country-option active" data-country="all">
+                            <i class="fas fa-globe"></i>
+                            <span>Все страны</span>
+                        </div>
+                        <div class="country-option" data-country="ru">
+                            <i class="fas fa-flag"></i>
+                            <span>Россия (+7)</span>
+                        </div>
+                        <div class="country-option" data-country="ua">
+                            <i class="fas fa-flag"></i>
+                            <span>Украина (+380)</span>
+                        </div>
+                        <div class="country-option" data-country="kz">
+                            <i class="fas fa-flag"></i>
+                            <span>Казахстан (+7)</span>
+                        </div>
+                        <div class="country-option" data-country="by">
+                            <i class="fas fa-flag"></i>
+                            <span>Беларусь (+375)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="products" id="productsContainer">
+                    <div class="no-numbers">
+                        <i class="fas fa-phone-slash"></i>
+                        <p>Номера скоро появятся</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Реф система -->
+            <div id="ref-page" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-users"></i> Реферальная система</h2>
+                </div>
+                <div class="ref-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Приглашено</span>
+                            <span class="stat-number">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-coins"></i></div>
+                        <div class="stat-info">
+                            <span class="stat-label">Заработано</span>
+                            <span class="stat-number">0 ₽</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ref-link-container">
+                    <p class="ref-label">Ваша реферальная ссылка:</p>
+                    <div class="ref-link-box">
+                        <span id="ref-link">https://t.me/maloybot?start=ref123</span>
+                        <button class="copy-btn" onclick="copyRefLink()">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Профиль -->
+            <div id="profile-page" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-user"></i> Профиль</h2>
+                </div>
+                <div class="profile-card">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h3>Пользователь</h3>
+                        <p class="balance">Баланс: <span>0 ₽</span></p>
+                    </div>
+                </div>
+
+                <!-- Промокод -->
+                <div class="promo-section">
+                    <h4><i class="fas fa-ticket-alt"></i> Промокод</h4>
+                    <div class="promo-input-group">
+                        <input type="text" id="promoCode" placeholder="Введите промокод" class="promo-input">
+                        <button onclick="checkPromoCode()" class="promo-btn">Активировать</button>
+                    </div>
+                </div>
+
+                <div class="purchase-history">
+                    <h4><i class="fas fa-history"></i> История покупок</h4>
+                    <div class="history-list" id="historyList">
+                        <div style="color: #666; text-align: center; padding: 2rem;">Покупок пока нет</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Поддержка -->
+            <div id="support-page" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-headset"></i> Поддержка</h2>
+                </div>
+                <div class="support-options">
+                    <div class="support-card" onclick="contactSupport()">
+                        <div class="support-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="support-info">
+                            <h3>Чат поддержки</h3>
+                            <p>Напишите нам в Telegram</p>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="support-card" onclick="showFAQ()">
+                        <div class="support-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="support-info">
+                            <h3>Частые вопросы</h3>
+                            <p>Ответы на популярные вопросы</p>
+                        </div>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="showPage('catalog-page')">
+                <i class="fas fa-list"></i>
+                <span>Номера</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('ref-page')">
+                <i class="fas fa-users"></i>
+                <span>Рефералы</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('profile-page')">
+                <i class="fas fa-user"></i>
+                <span>Профиль</span>
+            </button>
+            <button class="nav-btn" onclick="showPage('support-page')">
+                <i class="fas fa-headset"></i>
+                <span>Поддержка</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Модальное окно оплаты -->
+    <div id="paymentModal" class="modal hidden">
+        <div class="modal-content payment-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-robot"></i> Оплата через CryptoBot</h3>
+                <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info">
+                    <div class="payment-details">
+                        <p><strong>Номер:</strong> <span id="paymentPhone"></span></p>
+                        <p><strong>Сумма:</strong> <span id="paymentAmount"></span> ₽</p>
+                        <p class="crypto-amount">(~<span id="cryptoAmount">0</span> USDT)</p>
+                    </div>
+                    
+                    <div class="payment-link-section">
+                        <p>Для оплаты перейдите по ссылке:</p>
+                        <div class="payment-link-box">
+                            <a href="#" id="paymentLink" target="_blank" class="payment-link">
+                                <i class="fab fa-telegram"></i>
+                                Оплатить через @CryptoBot
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="payment-steps">
+                        <h4>Инструкция по оплате:</h4>
+                        <ol>
+                            <li>Нажмите на ссылку выше</li>
+                            <li>В открывшемся чате с @CryptoBot оплатите счет</li>
+                            <li>Вернитесь сюда и нажмите "Я оплатил"</li>
+                        </ol>
+                    </div>
+
+                    <div class="payment-timer">
+                        <p>Время на оплату: <span id="paymentTimer">15:00</span></p>
+                    </div>
+
+                    <div class="payment-actions">
+                        <button class="payment-btn paid" onclick="confirmPayment()">
+                            <i class="fas fa-check-circle"></i> Я оплатил
+                        </button>
+                        <button class="payment-btn cancel" onclick="closePaymentModal()">
+                            <i class="fas fa-times"></i> Отмена
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Админ-панель -->
+    <div id="adminPanel" class="admin-panel hidden">
+        <div class="admin-header">
+            <h3><i class="fas fa-cog"></i> Панель управления</h3>
+            <button class="close-admin" onclick="closeAdminPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('add-numbers')">
+                <i class="fas fa-plus"></i> Добавить номера
+            </button>
+            <button class="admin-tab" onclick="showAdminTab('manage-numbers')">
+                <i class="fas fa-edit"></i> Управление
+            </button>
+        </div>
+
+        <div class="admin-content">
+            <!-- Вкладка добавления номеров -->
+            <div id="add-numbers" class="admin-tab-content active">
+                <div class="admin-section">
+                    <h4><i class="fas fa-phone"></i> Добавить номера</h4>
+                    
+                    <div class="input-group">
+                        <label>Страна:</label>
+                        <select id="countrySelect" class="admin-select">
+                            <option value="ru">Россия (+7)</option>
+                            <option value="ua">Украина (+380)</option>
+                            <option value="kz">Казахстан (+7)</option>
+                            <option value="by">Беларусь (+375)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Номера (каждый с новой строки):</label>
+                        <textarea id="numbersInput" placeholder="+7 900 123-45-67
++7 901 234-56-78
++380 50 123-45-67" class="admin-textarea"></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Цена (₽):</label>
+                        <input type="number" id="priceInput" value="50" class="admin-input">
+                    </div>
+
+                    <button onclick="addNumbers()" class="admin-action-btn">
+                        <i class="fas fa-save"></i> Добавить номера
+                    </button>
+                </div>
+            </div>
+
+            <!-- Вкладка управления номерами -->
+            <div id="manage-numbers" class="admin-tab-content">
+                <div class="admin-section">
+                    <h4><i class="fas fa-list"></i> Все номера</h4>
+                    <div class="numbers-list" id="adminNumbersList">
+                        <div style="color: #666; text-align: center; padding: 2rem;">Номера не добавлены</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
