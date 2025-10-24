@@ -1,3 +1,18 @@
+// Mobile menu functionality
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu-content a');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+});
+
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+    });
+});
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -29,10 +44,7 @@ function scrollToPortfolio() {
 document.getElementById('projectForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const formData = new FormData(this);
     const data = {
-        name: this.querySelector('input[type="text"]').value,
-        telegram: this.querySelector('input[placeholder="Ваш Telegram"]').value,
         projectType: this.querySelector('select').value,
         budget: this.querySelector('input[placeholder="Ориентировочный бюджет"]').value,
         description: this.querySelector('textarea').value
@@ -40,11 +52,9 @@ document.getElementById('projectForm').addEventListener('submit', function(e) {
     
     // Создаем сообщение для Telegram
     const message = `📋 Новая заявка с сайта:
-    
-👤 Имя: ${data.name}
-📱 Telegram: ${data.telegram}
+
 🎯 Тип проекта: ${data.projectType}
-💰 Бюджет: ${data.budget}
+💰 Бюджет: ${data.budget || 'Не указан'}
 📝 Описание: ${data.description}`;
 
     // Открываем Telegram с предзаполненным сообщением
@@ -56,7 +66,7 @@ document.getElementById('projectForm').addEventListener('submit', function(e) {
     this.reset();
 });
 
-// Add scroll animation to service cards
+// Add scroll animation to elements
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -71,20 +81,12 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observe service cards for animation
-document.querySelectorAll('.service-card').forEach(card => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(card);
-});
-
-// Observe process steps for animation
-document.querySelectorAll('.process-step').forEach(step => {
-    step.style.opacity = '0';
-    step.style.transform = 'translateY(20px)';
-    step.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(step);
+// Observe elements for animation
+document.querySelectorAll('.service-card, .process-step, .portfolio-card').forEach(element => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(element);
 });
 
 // Add hover effect to portfolio cards
@@ -180,3 +182,10 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.nav') && !e.target.closest('.mobile-menu')) {
+        mobileMenu.classList.remove('active');
+    }
+});
