@@ -3,316 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maloy Sell</title>
+    <title>Full-Stack Developer | Telegram Bots & Web Development</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Загрузочный экран -->
-    <div id="loader">
-        <div class="loading-text">
-            <span class="letter">M</span>
-            <span class="letter">a</span>
-            <span class="letter">l</span>
-            <span class="letter">o</span>
-            <span class="letter">y</span>
-            <span class="letter">&nbsp;</span>
-            <span class="letter">S</span>
-            <span class="letter">e</span>
-            <span class="letter">l</span>
-            <span class="letter">l</span>
-        </div>
-        <div class="loading-circles">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-        </div>
-    </div>
-
-    <!-- Основной контент -->
-    <div id="app" class="hidden">
-        <!-- Шапка -->
-        <header class="header">
-            <div class="header-content">
-                <h1><i class="fas fa-store"></i> Maloy Sell</h1>
-                <button class="admin-panel-btn hidden" id="adminPanelBtn" onclick="showAdminPanel()">
-                    <i class="fas fa-cog"></i>
-                </button>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">DEV<span class="accent">.</span></div>
+            <div class="nav-links">
+                <a href="#services">Услуги</a>
+                <a href="#portfolio">Портфолио</a>
+                <a href="#process">Процесс</a>
+                <a href="#contact">Контакты</a>
             </div>
-        </header>
-
-        <!-- Контент страниц -->
-        <main id="content" class="content">
-            <!-- Каталог -->
-            <div id="catalog-page" class="page active">
-                <div class="page-header">
-                    <h2><i class="fas fa-list"></i> Номера Telegram</h2>
-                </div>
-                <div class="country-filter">
-                    <div class="filter-toggle" onclick="toggleCountryFilter()">
-                        <span id="filterText">Все страны</span>
-                        <i class="fas fa-chevron-down" id="filterArrow"></i>
-                    </div>
-                    <div class="country-dropdown" id="countryDropdown">
-                        <div class="country-option active" data-country="all">
-                            <i class="fas fa-globe"></i>
-                            <span>Все страны</span>
-                        </div>
-                        <div class="country-option" data-country="ru">
-                            <i class="fas fa-flag"></i>
-                            <span>Россия (+7)</span>
-                        </div>
-                        <div class="country-option" data-country="ua">
-                            <i class="fas fa-flag"></i>
-                            <span>Украина (+380)</span>
-                        </div>
-                        <div class="country-option" data-country="kz">
-                            <i class="fas fa-flag"></i>
-                            <span>Казахстан (+7)</span>
-                        </div>
-                        <div class="country-option" data-country="by">
-                            <i class="fas fa-flag"></i>
-                            <span>Беларусь (+375)</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="products" id="productsContainer">
-                    <div class="no-numbers">
-                        <i class="fas fa-phone-slash"></i>
-                        <p>Номера скоро появятся</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Реф система -->
-            <div id="ref-page" class="page">
-                <div class="page-header">
-                    <h2><i class="fas fa-users"></i> Реферальная система</h2>
-                </div>
-                <div class="ref-stats">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
-                        <div class="stat-info">
-                            <span class="stat-label">Приглашено</span>
-                            <span class="stat-number">0</span>
-                        </div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-coins"></i></div>
-                        <div class="stat-info">
-                            <span class="stat-label">Заработано</span>
-                            <span class="stat-number">0 ₽</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="ref-link-container">
-                    <p class="ref-label">Ваша реферальная ссылка:</p>
-                    <div class="ref-link-box">
-                        <span id="ref-link">https://t.me/maloybot?start=ref123</span>
-                        <button class="copy-btn" onclick="copyRefLink()">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Профиль -->
-            <div id="profile-page" class="page">
-                <div class="page-header">
-                    <h2><i class="fas fa-user"></i> Профиль</h2>
-                </div>
-                <div class="profile-card">
-                    <div class="avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <div class="profile-info">
-                        <h3>Пользователь</h3>
-                        <p class="balance">Баланс: <span>0 ₽</span></p>
-                    </div>
-                </div>
-
-                <!-- Промокод -->
-                <div class="promo-section">
-                    <h4><i class="fas fa-ticket-alt"></i> Промокод</h4>
-                    <div class="promo-input-group">
-                        <input type="text" id="promoCode" placeholder="Введите промокод" class="promo-input">
-                        <button onclick="checkPromoCode()" class="promo-btn">Активировать</button>
-                    </div>
-                </div>
-
-                <div class="purchase-history">
-                    <h4><i class="fas fa-history"></i> История покупок</h4>
-                    <div class="history-list" id="historyList">
-                        <div style="color: #666; text-align: center; padding: 2rem;">Покупок пока нет</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Поддержка -->
-            <div id="support-page" class="page">
-                <div class="page-header">
-                    <h2><i class="fas fa-headset"></i> Поддержка</h2>
-                </div>
-                <div class="support-options">
-                    <div class="support-card" onclick="contactSupport()">
-                        <div class="support-icon">
-                            <i class="fas fa-comments"></i>
-                        </div>
-                        <div class="support-info">
-                            <h3>Чат поддержки</h3>
-                            <p>Напишите нам в Telegram</p>
-                        </div>
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                    <div class="support-card" onclick="showFAQ()">
-                        <div class="support-icon">
-                            <i class="fas fa-question-circle"></i>
-                        </div>
-                        <div class="support-info">
-                            <h3>Частые вопросы</h3>
-                            <p>Ответы на популярные вопросы</p>
-                        </div>
-                        <i class="fas fa-chevron-right"></i>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Нижняя навигация -->
-        <nav class="bottom-nav">
-            <button class="nav-btn active" onclick="showPage('catalog-page')">
-                <i class="fas fa-list"></i>
-                <span>Номера</span>
-            </button>
-            <button class="nav-btn" onclick="showPage('ref-page')">
-                <i class="fas fa-users"></i>
-                <span>Рефералы</span>
-            </button>
-            <button class="nav-btn" onclick="showPage('profile-page')">
-                <i class="fas fa-user"></i>
-                <span>Профиль</span>
-            </button>
-            <button class="nav-btn" onclick="showPage('support-page')">
-                <i class="fas fa-headset"></i>
-                <span>Поддержка</span>
-            </button>
         </nav>
-    </div>
+    </header>
 
-    <!-- Модальное окно оплаты -->
-    <div id="paymentModal" class="modal hidden">
-        <div class="modal-content payment-modal">
-            <div class="modal-header">
-                <h3><i class="fas fa-robot"></i> Оплата через CryptoBot</h3>
-                <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Full-Stack 
+                <span class="gradient-text">Developer</span>
+            </h1>
+            <p class="hero-subtitle">Превращаю сложные задачи в работающие цифровые решения</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="scrollToContact()">Обсудить проект</button>
+                <button class="btn btn-secondary" onclick="scrollToPortfolio()">Смотреть работы</button>
             </div>
-            <div class="modal-body">
-                <div class="payment-info">
-                    <div class="payment-details">
-                        <p><strong>Номер:</strong> <span id="paymentPhone"></span></p>
-                        <p><strong>Сумма:</strong> <span id="paymentAmount"></span> ₽</p>
-                        <p class="crypto-amount">(~<span id="cryptoAmount">0</span> USDT)</p>
-                    </div>
-                    
-                    <div class="payment-link-section">
-                        <p>Для оплаты перейдите по ссылке:</p>
-                        <div class="payment-link-box">
-                            <a href="#" id="paymentLink" target="_blank" class="payment-link">
-                                <i class="fab fa-telegram"></i>
-                                Оплатить через @CryptoBot
-                            </a>
-                        </div>
-                    </div>
+        </div>
+        <div class="hero-animation">
+            <div class="code-animation">
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+                <div class="code-line"></div>
+            </div>
+        </div>
+    </section>
 
-                    <div class="payment-steps">
-                        <h4>Инструкция по оплате:</h4>
-                        <ol>
-                            <li>Нажмите на ссылку выше</li>
-                            <li>В открывшемся чате с @CryptoBot оплатите счет</li>
-                            <li>Вернитесь сюда и нажмите "Я оплатил"</li>
-                        </ol>
-                    </div>
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2 class="section-title">Мои Услуги</h2>
+        <div class="services-grid">
+            <!-- Telegram Bots -->
+            <div class="service-card" data-service="telegram">
+                <div class="service-icon"><i class="fab fa-telegram"></i></div>
+                <h3>Telegram Боты</h3>
+                <ul>
+                    <li>Автоответчики и CRM</li>
+                    <li>Платежи через Stars</li>
+                    <li>Интеграции с API</li>
+                    <li>Парсинг и аналитика</li>
+                </ul>
+            </div>
 
-                    <div class="payment-timer">
-                        <p>Время на оплату: <span id="paymentTimer">15:00</span></p>
-                    </div>
+            <!-- Websites -->
+            <div class="service-card" data-service="websites">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <h3>Сайты под ключ</h3>
+                <ul>
+                    <li>Интернет-магазины</li>
+                    <li>Корпоративные сайты</li>
+                    <li>Лендинги</li>
+                    <li>Веб-приложения</li>
+                </ul>
+            </div>
 
-                    <div class="payment-actions">
-                        <button class="payment-btn paid" onclick="confirmPayment()">
-                            <i class="fas fa-check-circle"></i> Я оплатил
-                        </button>
-                        <button class="payment-btn cancel" onclick="closePaymentModal()">
-                            <i class="fas fa-times"></i> Отмена
-                        </button>
-                    </div>
+            <!-- Mini Apps -->
+            <div class="service-card" data-service="miniapps">
+                <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Mini Apps</h3>
+                <ul>
+                    <li>Telegram Mini Apps</li>
+                    <li>Веб-приложения</li>
+                    <li>Гибридные приложения</li>
+                    <li>PWA</li>
+                </ul>
+            </div>
+
+            <!-- Data Parsing -->
+            <div class="service-card" data-service="parsing">
+                <div class="service-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3>Парсинг данных</h3>
+                <ul>
+                    <li>Сбор и анализ данных</li>
+                    <li>Визуализация в дашбордах</li>
+                    <li>Автоматические отчеты</li>
+                    <li>API для данных</li>
+                </ul>
+            </div>
+
+            <!-- Automation -->
+            <div class="service-card" data-service="automation">
+                <div class="service-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Автоматизация</h3>
+                <ul>
+                    <li>Бизнес-процессы</li>
+                    <li>Интеграции сервисов</li>
+                    <li>Уведомления и отчеты</li>
+                    <li>Рабочие процессы</li>
+                </ul>
+            </div>
+
+            <!-- Python Scripts -->
+            <div class="service-card" data-service="python">
+                <div class="service-icon"><i class="fab fa-python"></i></div>
+                <h3>Python Скрипты</h3>
+                <ul>
+                    <li>Индивидуальные решения</li>
+                    <li>Обработка данных</li>
+                    <li>Автоматизация задач</li>
+                    <li>Интеграции</li>
+                </ul>
+            </div>
+
+            <!-- Databases -->
+            <div class="service-card" data-service="databases">
+                <div class="service-icon"><i class="fas fa-database"></i></div>
+                <h3>Базы данных</h3>
+                <ul>
+                    <li>Проектирование БД</li>
+                    <li>Оптимизация запросов</li>
+                    <li>Миграция данных</li>
+                    <li>Резервное копирование</li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="service-card" data-service="support">
+                <div class="service-icon"><i class="fas fa-tools"></i></div>
+                <h3>Тех. поддержка</h3>
+                <ul>
+                    <li>Исправление багов</li>
+                    <li>Технические консультации</li>
+                    <li>Доработки проектов</li>
+                    <li>Обслуживание</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <h2 class="section-title">Мои Работы</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="portfolio-badge">Telegram Bot</div>
+                <h3>E-Commerce Bot</h3>
+                <p>Полнофункциональный бот для интернет-магазина с интеграцией платежей Telegram Stars</p>
+                <div class="portfolio-tech">
+                    <span>Python</span>
+                    <span>Telethon</span>
+                    <span>SQLite</span>
+                    <span>API</span>
+                </div>
+                <div class="portfolio-result">
+                    <strong>Результат:</strong> Увеличение продаж на 40%
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-badge">Data Parser</div>
+                <h3>Market Data Analytics</h3>
+                <p>Система парсинга и анализа рыночных данных с 50+ источников и дашбордом</p>
+                <div class="portfolio-tech">
+                    <span>Python</span>
+                    <span>BeautifulSoup</span>
+                    <span>React</span>
+                    <span>MongoDB</span>
+                </div>
+                <div class="portfolio-result">
+                    <strong>Результат:</strong> Экономия 20 часов/неделю
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-badge">Web App</div>
+                <h3>Business Dashboard</h3>
+                <p>Дашборд для визуализации бизнес-метрик с автоматическими отчетами</p>
+                <div class="portfolio-tech">
+                    <span>JavaScript</span>
+                    <span>React</span>
+                    <span>Chart.js</span>
+                    <span>API</span>
+                </div>
+                <div class="portfolio-result">
+                    <strong>Результат:</strong> Улучшение принятия решений
+                </div>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="portfolio-badge">Любые проекты</div>
+                <h3>Индивидуальные решения</h3>
+                <p>Готов взяться за проекты любой сложности - от простых скриптов до комплексных систем</p>
+                <div class="portfolio-tech">
+                    <span>Python</span>
+                    <span>JavaScript</span>
+                    <span>API</span>
+                    <span>Базы данных</span>
+                </div>
+                <div class="portfolio-result">
+                    <strong>Результат:</strong> Реализация под ваши конкретные задачи
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Админ-панель -->
-    <div id="adminPanel" class="admin-panel hidden">
-        <div class="admin-header">
-            <h3><i class="fas fa-cog"></i> Панель управления</h3>
-            <button class="close-admin" onclick="closeAdminPanel()">
-                <i class="fas fa-times"></i>
-            </button>
+    <!-- Process Section -->
+    <section id="process" class="process">
+        <h2 class="section-title">Процесс Работы</h2>
+        <div class="process-steps">
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>Консультация</h3>
+                <p>Бесплатно обсуждаем задачу, цели и требования к проекту</p>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <h3>ТЗ и оценка</h3>
+                <p>Составляем детальный план, определяем сроки и стоимость</p>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Разработка</h3>
+                <p>Регулярные демо-версии и правки по ходу работы над проектом</p>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3>Запуск</h3>
+                <p>Тестирование, финальные правки и сдача готового проекта</p>
+            </div>
+            <div class="process-step">
+                <div class="step-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Поддержка</h3>
+                <p>Гарантийный период 30 дней и дальнейшая техническая поддержка</p>
+            </div>
         </div>
-        
-        <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('add-numbers')">
-                <i class="fas fa-plus"></i> Добавить номера
-            </button>
-            <button class="admin-tab" onclick="showAdminTab('manage-numbers')">
-                <i class="fas fa-edit"></i> Управление
-            </button>
-        </div>
+    </section>
 
-        <div class="admin-content">
-            <!-- Вкладка добавления номеров -->
-            <div id="add-numbers" class="admin-tab-content active">
-                <div class="admin-section">
-                    <h4><i class="fas fa-phone"></i> Добавить номера</h4>
-                    
-                    <div class="input-group">
-                        <label>Страна:</label>
-                        <select id="countrySelect" class="admin-select">
-                            <option value="ru">Россия (+7)</option>
-                            <option value="ua">Украина (+380)</option>
-                            <option value="kz">Казахстан (+7)</option>
-                            <option value="by">Беларусь (+375)</option>
-                        </select>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Готов к Новым Проектам!</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fab fa-telegram"></i></div>
+                    <div>
+                        <h4>Telegram</h4>
+                        <p><a href="https://t.me/xotaruz" target="_blank">@xotaruz</a></p>
                     </div>
-
-                    <div class="input-group">
-                        <label>Номера (каждый с новой строки):</label>
-                        <textarea id="numbersInput" placeholder="+7 900 123-45-67
-+7 901 234-56-78
-+380 50 123-45-67" class="admin-textarea"></textarea>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Цена (₽):</label>
-                        <input type="number" id="priceInput" value="50" class="admin-input">
-                    </div>
-
-                    <button onclick="addNumbers()" class="admin-action-btn">
-                        <i class="fas fa-save"></i> Добавить номера
-                    </button>
                 </div>
             </div>
 
-            <!-- Вкладка управления номерами -->
-            <div id="manage-numbers" class="admin-tab-content">
-                <div class="admin-section">
-                    <h4><i class="fas fa-list"></i> Все номера</h4>
-                    <div class="numbers-list" id="adminNumbersList">
-                        <div style="color: #666; text-align: center; padding: 2rem;">Номера не добавлены</div>
-                    </div>
-                </div>
-            </div>
+            <form class="contact-form" id="projectForm">
+                <h3>Быстрая заявка</h3>
+                <input type="text" placeholder="Ваше имя" required>
+                <input type="text" placeholder="Ваш Telegram" required>
+                
+                <select required>
+                    <option value="">Выберите тип проекта</option>
+                    <option value="telegram">Telegram Бот</option>
+                    <option value="website">Сайт</option>
+                    <option value="miniapp">Mini App</option>
+                    <option value="parsing">Парсинг данных</option>
+                    <option value="automation">Автоматизация</option>
+                    <option value="python">Python скрипт</option>
+                    <option value="database">База данных</option>
+                    <option value="support">Тех. поддержка</option>
+                    <option value="other">Другое</option>
+                </select>
+                
+                <input type="text" placeholder="Ориентировочный бюджет">
+                <textarea placeholder="Описание проекта" rows="4"></textarea>
+                <button type="submit" class="btn btn-primary">Отправить заявку</button>
+            </form>
         </div>
-    </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Full-Stack Developer. Все права защищены.</p>
+    </footer>
 
     <script src="script.js"></script>
 </body>
